@@ -50,7 +50,14 @@ class GitWorkspace(private val root: File, private val authorName: String, priva
         destination.mkdirs()
         return try {
             Git.cloneRepository().setURI(bundleFile.absoluteFile.toURI().toString())
-                .setDirectory(destination).call().use { it.repository.workTree }
+                .setDirectory(destination).call().use { imported ->
+                    // A Git Bundle is an offline interchange artifact, not a live upstream.
+                    // Remove the temporary bundle path that clone records as origin.
+                    if (imported.remoteList().call().any { it.name == "origin" }) {
+                        imported.remoteRemove().setRemoteName("origin").call()
+                    }
+                    imported.repository.workTree
+                }
         } catch (failure: Exception) {
             destination.deleteRecursively()
             throw failure
