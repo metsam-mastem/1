@@ -25,6 +25,12 @@ class GitWorkspaceTest {
         assertTrue(workspace.status("sample").isClean)
     }
 
+    @Test fun diffIsSafeBeforeTheFirstCommit() {
+        workspace.createRepository("sample")
+        val diff = workspace.diff("sample")
+        assertTrue(diff.contains("No committed HEAD yet"))
+    }
+
     @Test fun tracksStagesAndCommitsAFile() {
         workspace.createRepository("sample")
         workspace.writeFile("sample", "notes/idea.md", "# Local first")
