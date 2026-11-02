@@ -61,6 +61,12 @@
           "name": "org.ugi.inventory-limitations",
           "value": "Distribution-specific CPython standard-library notices, OS packages, TLS/OpenSSL provider, libc, and system Git transitive packages are not expanded in this source-release BOM."
         }
+      ],
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://opensource.org/license/mit"
+        }
       ]
     }
   },
@@ -90,6 +96,10 @@
         {
           "type": "documentation",
           "url": "https://devguide.python.org/versions/"
+        },
+        {
+          "type": "license",
+          "url": "https://spdx.org/licenses/PSF-2.0.html"
         }
       ],
       "properties": [
@@ -124,6 +134,10 @@
         {
           "type": "vcs",
           "url": "https://github.com/git/git"
+        },
+        {
+          "type": "license",
+          "url": "https://spdx.org/licenses/GPL-2.0-only.html"
         }
       ],
       "properties": [
