@@ -39,7 +39,7 @@ jobs:
         run: |
           sdkmanager --list --channel=1 | grep -E 'platforms;android-37|build-tools;37' || true
       - name: Install Android 17 preview SDK and Build Tools 37
-        run: sdkmanager --channel=1 "platforms;android-37" "build-tools;37.0.0"
+        run: sdkmanager --channel=1 "platforms;android-37.0" "build-tools;37.0.0"
       - name: Set up Gradle 9.4.1
         uses: gradle/actions/setup-gradle@v6
         with:
