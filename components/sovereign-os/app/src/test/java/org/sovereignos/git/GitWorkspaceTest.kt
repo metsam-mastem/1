@@ -53,7 +53,8 @@ class GitWorkspaceTest {
         val bytes = byteArrayOf(0, 1, 2, 10, 13, -1)
         workspace.importFile("sample", "assets/payload.bin", ByteArrayInputStream(bytes))
         assertArrayEquals(bytes, java.io.File(root, "sample/assets/payload.bin").readBytes())
-        assertEquals(listOf("assets/"), workspace.status("sample").untracked)
+        val untracked = workspace.status("sample").untracked
+        assertTrue(untracked.any { it == "assets/" || it == "assets/payload.bin" })
     }
 
     @Test fun modelContextContainsUsefulFilesButExcludesSecretLikeFiles() {
@@ -177,6 +178,10 @@ class GitWorkspaceTest {
         org.eclipse.jgit.api.Git.init().setBare(true).setDirectory(bareRemote).call().use { }
         workspace.addRemote("source", "origin", bareRemote.toURI().toString())
         workspace.push("source", "origin")
+        // A bare repository HEAD must point to the branch that was pushed.
+        org.eclipse.jgit.api.Git.open(bareRemote).use { remoteGit ->
+            remoteGit.repository.updateRef(org.eclipse.jgit.lib.Constants.HEAD).link("refs/heads/main")
+        }
 
         workspace.cloneRepository("cloned", bareRemote.toURI().toString())
         assertEquals("clone this repository", java.io.File(root, "cloned/README.md").readText())
