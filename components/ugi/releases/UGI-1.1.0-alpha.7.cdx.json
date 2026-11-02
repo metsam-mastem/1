@@ -1,0 +1,79 @@
+{
+  "$schema": "https://cyclonedx.org/schema/bom-1.7.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:30167631-6790-502e-9049-1fab31834888",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-02T00:00:00Z",
+    "lifecycles": [{"phase": "post-build"}],
+    "authors": [{"name": "UGI contributors"}],
+    "component": {
+      "type": "application",
+      "bom-ref": "pkg:generic/universal-git-infrastructure@1.1.0-alpha.7",
+      "name": "Universal Git Infrastructure",
+      "version": "1.1.0-alpha.7",
+      "description": "Local-first Git workbench source release; Python local service and Persian RTL PWA.",
+      "purl": "pkg:generic/universal-git-infrastructure@1.1.0-alpha.7",
+      "scope": "required",
+      "isExternal": false,
+      "licenses": [{"license": {"id": "MIT", "acknowledgement": "declared", "url": "https://opensource.org/license/mit"}}],
+      "hashes": [{"alg": "SHA-256", "content": "b48273886beb7a4915a99d2cdb199e81062b3fd4a9c07ca04fea461f18200f7c"}],
+      "properties": [
+        {"name": "org.ugi.sbom.scope", "value": "Source archive plus declared mandatory host prerequisites; incomplete for deployment."},
+        {"name": "org.ugi.third-party-python-packages", "value": "none"},
+        {"name": "org.ugi.runtime-requirements", "value": "CPython >=3.11.0; Git CLI >=2.28.0"},
+        {"name": "org.ugi.excluded-tooling", "value": "Node.js is used for JavaScript syntax checks only; it is not a UGI product runtime requirement."},
+        {"name": "org.ugi.inventory-limitations", "value": "OS distribution packages, libc, TLS/OpenSSL provider, Git transitive packages, and distribution-specific Python notices are not expanded."}
+      ],
+      "externalReferences": [
+        {"type": "license", "url": "https://opensource.org/license/mit"},
+        {"type": "vcs", "url": "https://github.com/metsam-mastem/1"}
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "platform",
+      "bom-ref": "pkg:generic/cpython",
+      "name": "CPython",
+      "purl": "pkg:generic/cpython",
+      "versionRange": "vers:generic/>=3.11.0",
+      "isExternal": true,
+      "scope": "required",
+      "description": "External host Python interpreter required by the UGI local service; not bundled.",
+      "licenses": [{"license": {"id": "PSF-2.0", "acknowledgement": "declared"}}],
+      "externalReferences": [
+        {"type": "website", "url": "https://www.python.org/"},
+        {"type": "documentation", "url": "https://devguide.python.org/versions/"},
+        {"type": "license", "url": "https://spdx.org/licenses/PSF-2.0.html"}
+      ],
+      "properties": [{"name": "org.ugi.license-scope", "value": "PSF-2.0 identifies the CPython core; distribution-specific bundled standard-library notices are not exhaustively inventoried."}]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/git",
+      "name": "Git CLI",
+      "purl": "pkg:generic/git",
+      "versionRange": "vers:generic/>=2.28.0",
+      "isExternal": true,
+      "scope": "required",
+      "description": "External Git executable used by UGI subprocess operations; not bundled in the source archive.",
+      "licenses": [{"license": {"id": "GPL-2.0-only", "acknowledgement": "declared"}}],
+      "externalReferences": [
+        {"type": "website", "url": "https://git-scm.com/about"},
+        {"type": "vcs", "url": "https://github.com/git/git"},
+        {"type": "license", "url": "https://spdx.org/licenses/GPL-2.0-only.html"}
+      ],
+      "properties": [{"name": "org.ugi.license-scope", "value": "GPL-2.0-only is Git's main project license; some individual files may have compatible alternate licenses."}]
+    }
+  ],
+  "dependencies": [
+    {"ref": "pkg:generic/universal-git-infrastructure@1.1.0-alpha.7", "dependsOn": ["pkg:generic/cpython", "pkg:generic/git"]},
+    {"ref": "pkg:generic/cpython", "dependsOn": []},
+    {"ref": "pkg:generic/git", "dependsOn": []}
+  ],
+  "compositions": [
+    {"aggregate": "incomplete", "dependencies": ["pkg:generic/universal-git-infrastructure@1.1.0-alpha.7"]}
+  ]
+}
