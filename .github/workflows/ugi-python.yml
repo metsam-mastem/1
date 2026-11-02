@@ -1,0 +1,88 @@
+name: UGI Python verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "components/ugi/releases/UGI-1.1.0-alpha.7.zip"
+  pull_request:
+    branches: [main]
+    paths:
+      - "components/ugi/releases/UGI-1.1.0-alpha.7.zip"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14", "3.15"]
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up Node.js for syntax checks only
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Verify and extract release archive
+        env:
+          ARCHIVE: components/ugi/releases/UGI-1.1.0-alpha.7.zip
+          EXTRACT_TO: ${{ runner.temp }}/ugi-alpha7
+        run: |
+          python - <<'PY'
+          import os
+          import zipfile
+          from pathlib import Path
+
+          archive = Path(os.environ["ARCHIVE"])
+          destination = Path(os.environ["EXTRACT_TO"])
+          if not archive.is_file():
+              raise SystemExit(f"Release archive is missing: {archive}")
+          with zipfile.ZipFile(archive) as zf:
+              bad = zf.testzip()
+              if bad:
+                  raise SystemExit(f"Corrupt ZIP member: {bad}")
+              names = zf.namelist()
+              if any("__pycache__" in n or n.endswith((".pyc", ".pyo", ".log")) for n in names):
+                  raise SystemExit("Release archive contains cache, bytecode or log files")
+              zf.extractall(destination)
+          print(f"Extracted {len(names)} members")
+          PY
+
+      - name: Run full unit and integration tests
+        working-directory: ${{ runner.temp }}/ugi-alpha7/UGI-1.1.0-alpha.7
+        run: python -m unittest discover -s tests -v
+
+      - name: Compile Python sources
+        working-directory: ${{ runner.temp }}/ugi-alpha7/UGI-1.1.0-alpha.7
+        run: python -m compileall -q ugi tests run.py tools
+
+      - name: Check browser JavaScript syntax
+        working-directory: ${{ runner.temp }}/ugi-alpha7/UGI-1.1.0-alpha.7
+        run: |
+          node --check web/app.js
+          node --check web/sw.js
+
+      - name: Verify CLI version
+        working-directory: ${{ runner.temp }}/ugi-alpha7/UGI-1.1.0-alpha.7
+        run: python -c "from ugi import __version__; assert __version__ == '1.1.0-alpha.7'; print(__version__)"
+
+      - name: Verify deterministic package build
+        working-directory: ${{ runner.temp }}/ugi-alpha7/UGI-1.1.0-alpha.7
+        run: |
+          python tools/build_release.py --output "${RUNNER_TEMP}/ugi-a.zip"
+          python tools/build_release.py --output "${RUNNER_TEMP}/ugi-b.zip"
+          cmp "${RUNNER_TEMP}/ugi-a.zip" "${RUNNER_TEMP}/ugi-b.zip"
