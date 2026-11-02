@@ -16,14 +16,15 @@
   - Compose BOM 2026.09.00, Activity 1.13.0, Lifecycle 2.11.0, LiteRT-LM 0.19.0, JGit 7.8.0.
   - compileSdk 37 preview; targetSdk stays 36.
   - Dependency resolution, Android unit test task, and Debug APK assembly all PASS.
-  - Two AGP opt-out properties still emit deprecation warnings. PR is not merged.
+  - Two AGP opt-out properties and SDK Manager CLI still emit deprecation warnings. PR is not merged.
 - UGI local source package advanced to 1.1.0-alpha.6.
   - 49 tests PASS from clean ZIP extraction.
   - Python compileall, JavaScript syntax checks, and CLI version PASS.
   - Deterministic package build verified by matching SHA-256 from two builds.
   - ZIP SHA-256: 9b975f864edb62819e09c450a40761ad6523f96313a951ffdb4fc4e21a17eb2d.
 - CycloneDX 1.7 source-release SBOM published to components/ugi/releases/UGI-1.1.0-alpha.6.cdx.json.
-  - SBOM SHA-256: b534bb7a669151122c75b46f66986498a1d82e67af505ccad3526263525309fe.
+  - SBOM SHA-256: 79ea000a7c8c5c217931644681ee442b02b0aa964ce99a1e0a1e49e42f0b8563.
+  - SPDX license references are included for MIT, PSF-2.0 and GPL-2.0-only.
   - SBOM scope is explicitly incomplete and excludes full OS/runtime transitive inventory.
   - Official CycloneDX JSON Schema validator was NOT RUN.
 - Open-source ecosystem and standards audit published: docs/OPEN_SOURCE_AND_STANDARDS_AUDIT_2026-11-02.md.
