@@ -1,0 +1,162 @@
+{
+  "$schema": "https://cyclonedx.org/schema/bom-1.7.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:35604dbf-beae-5cad-a5a9-bbceb83f5632",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-02T00:00:00Z",
+    "lifecycles": [
+      {
+        "phase": "post-build"
+      }
+    ],
+    "authors": [
+      {
+        "name": "UGI contributors"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "bom-ref": "pkg:generic/universal-git-infrastructure@1.1.0-alpha.6",
+      "name": "Universal Git Infrastructure",
+      "version": "1.1.0-alpha.6",
+      "description": "Local-first Git workbench source distribution; Python local service and Persian RTL PWA.",
+      "purl": "pkg:generic/universal-git-infrastructure@1.1.0-alpha.6",
+      "scope": "required",
+      "isExternal": false,
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared",
+            "url": "https://opensource.org/license/mit"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9b975f864edb62819e09c450a40761ad6523f96313a951ffdb4fc4e21a17eb2d"
+        }
+      ],
+      "properties": [
+        {
+          "name": "org.ugi.sbom.scope",
+          "value": "Source package plus mandatory host runtime requirements; not a full OS/runtime SBOM."
+        },
+        {
+          "name": "org.ugi.third-party-python-packages",
+          "value": "none"
+        },
+        {
+          "name": "org.ugi.runtime-requirements",
+          "value": "CPython >=3.11.0; Git CLI >=2.28.0"
+        },
+        {
+          "name": "org.ugi.excluded-tooling",
+          "value": "Node.js is used only for JavaScript syntax validation in QA; it is not a UGI runtime requirement."
+        },
+        {
+          "name": "org.ugi.inventory-limitations",
+          "value": "Distribution-specific CPython standard-library notices, OS packages, TLS/OpenSSL provider, libc, and system Git transitive packages are not expanded in this source-release BOM."
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "platform",
+      "bom-ref": "pkg:generic/cpython",
+      "name": "CPython",
+      "purl": "pkg:generic/cpython",
+      "versionRange": "vers:generic/>=3.11.0",
+      "isExternal": true,
+      "scope": "required",
+      "description": "Host Python interpreter required by the UGI local service.",
+      "licenses": [
+        {
+          "license": {
+            "id": "PSF-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://www.python.org/"
+        },
+        {
+          "type": "documentation",
+          "url": "https://devguide.python.org/versions/"
+        }
+      ],
+      "properties": [
+        {
+          "name": "org.ugi.license-scope",
+          "value": "PSF-2.0 describes the CPython core; distribution-specific bundled standard-library notices are not exhaustively enumerated here."
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/git",
+      "name": "Git CLI",
+      "purl": "pkg:generic/git",
+      "versionRange": "vers:generic/>=2.28.0",
+      "isExternal": true,
+      "scope": "required",
+      "description": "External Git executable used by UGI subprocess operations; it is not bundled in the source archive.",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-only",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://git-scm.com/about"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/git/git"
+        }
+      ],
+      "properties": [
+        {
+          "name": "org.ugi.license-scope",
+          "value": "Git project describes GPLv2 as its main license; some individual Git source files may carry other compatible licenses."
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:generic/universal-git-infrastructure@1.1.0-alpha.6",
+      "dependsOn": [
+        "pkg:generic/cpython",
+        "pkg:generic/git"
+      ]
+    },
+    {
+      "ref": "pkg:generic/cpython",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:generic/git",
+      "dependsOn": []
+    }
+  ],
+  "compositions": [
+    {
+      "aggregate": "incomplete",
+      "dependencies": [
+        "pkg:generic/universal-git-infrastructure@1.1.0-alpha.6"
+      ]
+    }
+  ]
+}
