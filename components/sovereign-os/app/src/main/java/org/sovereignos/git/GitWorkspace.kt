@@ -292,6 +292,9 @@ class GitWorkspace(private val root: File, private val authorName: String, priva
     }
 
     fun diff(name: String): String = withGit(name) { git ->
+        if (git.repository.resolve(Constants.HEAD) == null) {
+            return@withGit "No committed HEAD yet; diff is unavailable until the first commit."
+        }
         val unstaged = ByteArrayOutputStream()
         git.diff().setOutputStream(unstaged).call()
         val staged = ByteArrayOutputStream()
