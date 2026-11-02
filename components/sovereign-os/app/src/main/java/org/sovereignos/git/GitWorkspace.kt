@@ -280,6 +280,7 @@ class GitWorkspace(private val root: File, private val authorName: String, priva
 
     fun recentCommits(name: String, limit: Int = 20): List<GitCommitInfo> = withGit(name) { git ->
         require(limit in 1..100) { "Limit must be between 1 and 100" }
+        if (git.repository.resolve(Constants.HEAD) == null) return@withGit emptyList()
         val result = mutableListOf<GitCommitInfo>()
         git.log().setMaxCount(limit).call().forEach { commit ->
             result += GitCommitInfo(
