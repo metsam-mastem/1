@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
+    id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
@@ -11,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "org.sovereignos"
         minSdk = 26
-        // Keep the stable target API until Android 17 (API 37) is finalized.
+        // Keep the stable target API until Android 17 is finalized.
         targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
