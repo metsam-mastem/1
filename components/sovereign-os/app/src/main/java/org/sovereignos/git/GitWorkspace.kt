@@ -11,7 +11,7 @@ import org.eclipse.jgit.transport.URIish
 import org.eclipse.jgit.transport.RefSpec
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import org.eclipse.jgit.api.ListBranchCommand
-import org.eclipse.jgit.util.NullProgressMonitor
+import org.eclipse.jgit.lib.NullProgressMonitor
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
