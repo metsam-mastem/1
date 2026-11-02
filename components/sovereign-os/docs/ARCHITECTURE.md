@@ -38,7 +38,7 @@ The commercial roadmap remains provider-neutral:
 - Phone-triggered shell execution is not enabled in the initial commercial design.
 - GitSync GPL source and GitNomad proprietary/undisclosed source are not copied; implementation is independent.
 
-See docs/COMMERCIAL_EDITION_PLAN.md and docs/COMPETITIVE_RESEARCH_2026-10-30.md.
+Commercial and competitive research planning materials are intentionally excluded from this public mirror.
 
 ### Model routing
 - Embedded: LiteRT-LM Android 0.18.1, .litertlm model imported by SAF into app-private storage, CPU backend, single-thread runtime owner.
