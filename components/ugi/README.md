@@ -15,10 +15,10 @@ Independent local-first Git workbench. Python local service + Persian RTL PWA; d
 
 UGI remains an independent Python local-service + PWA component. SOVEREIGN OS remains an independent Android/JGit application. Cross-runtime transfer is based on standard Git Bundle files; neither runtime is embedded into the other.
 
-The inspected Android `GitWorkspace` has corresponding JGit primitives, but a `JGitProviderAdapter` implementing the complete v1.0 contract and matching Android conformance tests remain **NOT RUN / NOT IMPLEMENTED**.
+Android now has a separate `JGitProviderAdapter` facade over `GitWorkspace`. Provider conformance tests and the test-first RED→GREEN Android CI cycle passed. This adapter does not launch or depend on the Python UGI service. Physical-device acceptance remains NOT RUN.
 
 ## Publication status
 
-The complete alpha.5 source archive is built and verified locally. The full archive has **not** yet been committed to this public repository; only the contract source/test delta and integration documentation are present here. Remote publication must not be marked complete until the full source tree or release archive is uploaded and fetched back for checksum verification.
+The complete alpha.5 source archive is built and verified locally. The full archive has **not** yet been committed to this public repository; only the contract source/test/documentation delta is present. Remote publication must not be marked complete until the full source tree or release archive is uploaded and fetched back for checksum verification.
 
 See [GitProvider Contract v1.0](docs/GIT_PROVIDER_CONTRACT_V1.md).
