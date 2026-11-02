@@ -4,21 +4,28 @@ Independent local-first Git workbench. Python local service + Persian RTL PWA; d
 
 ## Current source snapshot
 
-- Local source package: **UGI 1.1.0-alpha.5**.
-- Source license: MIT; retain the package LICENSE file.
-- Python provider contract: `ugi.provider.GitProvider`, contract version `1.0`.
-- Local implementation: `UgiLocalAdapter`.
-- Verification on 2026-11-02: **32 tests + 12 subtests PASS**, Python compilation PASS, JavaScript syntax PASS.
-- New remotely committed files: provider Protocol, provider conformance tests, and provider contract document.
+- Local source package: **UGI 1.1.0-alpha.6**.
+- Source license: MIT; the archive retains LICENSE.
+- Python provider contract: ugi.provider.GitProvider, contract version 1.0.
+- Local implementation: UgiLocalAdapter.
+- Verification from a clean ZIP extraction on 2026-11-02: **49 tests PASS**, Python compileall PASS, JavaScript syntax checks PASS, CLI version PASS.
+- Package is reproducible: two builds from the same source produced the same SHA-256.
+- ZIP SHA-256: 9b975f864edb62819e09c450a40761ad6523f96313a951ffdb4fc4e21a17eb2d.
+- Companion CycloneDX 1.7 source-release BOM published at releases/UGI-1.1.0-alpha.6.cdx.json.
+- SBOM SHA-256: b534bb7a669151122c75b46f66986498a1d82e67af505ccad3526263525309fe.
+- SBOM completeness is explicitly marked incomplete; it is not an OS/deployment BOM. The official CycloneDX JSON Schema validator was not run.
 
 ## Integration boundary
 
 UGI remains an independent Python local-service + PWA component. SOVEREIGN OS remains an independent Android/JGit application. Cross-runtime transfer is based on standard Git Bundle files; neither runtime is embedded into the other.
 
-Android now has a separate `JGitProviderAdapter` facade over `GitWorkspace`. Provider conformance tests and the test-first RED→GREEN Android CI cycle passed. This adapter does not launch or depend on the Python UGI service. Physical-device acceptance remains NOT RUN.
+Android has a separate JGitProviderAdapter facade over GitWorkspace. Provider conformance tests passed in CI. Physical-device acceptance remains NOT RUN.
 
 ## Publication status
 
-The complete alpha.5 source archive is built and verified locally. The full archive has **not** yet been committed to this public repository; only the contract source/test/documentation delta is present. Remote publication must not be marked complete until the full source tree or release archive is uploaded and fetched back for checksum verification.
+The complete alpha.6 ZIP has been built, checksum-verified, and delivered as a local file attachment. GitHub contains the companion SBOM, checksum, SBOM scope, provider contract, and UGI integration documentation, but the full ZIP archive has **not** yet been uploaded to this public repository. Remote source-package publication remains open until the ZIP can be uploaded and fetched back for checksum comparison.
 
-See [GitProvider Contract v1.0](docs/GIT_PROVIDER_CONTRACT_V1.md).
+See:
+- [GitProvider Contract v1.0](docs/GIT_PROVIDER_CONTRACT_V1.md)
+- [SBOM scope and limitations](docs/SBOM_SCOPE.md)
+- [Open-source ecosystem and standards audit](../../docs/OPEN_SOURCE_AND_STANDARDS_AUDIT_2026-11-02.md)
