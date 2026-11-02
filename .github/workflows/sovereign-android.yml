@@ -43,8 +43,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
         with:
           gradle-version: "9.5.0"
-      - name: Verify dependency resolution
-        run: gradle --no-daemon dependencies --configuration debugRuntimeClasspath
+      - name: Verify app dependency resolution
+        run: gradle --no-daemon :app:dependencies --configuration debugRuntimeClasspath
       - name: Run unit tests
         run: gradle --no-daemon test
       - name: Build debug APK
