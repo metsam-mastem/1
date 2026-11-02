@@ -111,6 +111,8 @@ class GitWorkspaceTest {
         assertEquals("portable offline history", java.io.File(importedRoot, "copy/README.md").readText())
         assertEquals("Portable baseline", imported.recentCommits("copy", 1).single().message)
         assertTrue(imported.listBranches("copy").contains("main"))
+        assertTrue("An offline Bundle import must not retain its temporary file as origin",
+            imported.listRemotes("copy").isEmpty())
     }
 
     @Test fun managesNamedHttpsRemotesWithoutEmbeddingCredentials() {
