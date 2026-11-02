@@ -1,0 +1,50 @@
+name: SOVEREIGN Android verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "components/sovereign-os/**"
+      - ".github/workflows/sovereign-android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: components/sovereign-os
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Install Android 36 SDK
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - name: Set up Gradle 8.13
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.13"
+      - name: Run unit tests
+        run: gradle --no-daemon test
+      - name: Build debug APK
+        run: gradle --no-daemon :app:assembleDebug
+      - name: Upload verification outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sovereign-android-verification
+          path: |
+            components/sovereign-os/app/build/outputs/apk/debug/*.apk
+            components/sovereign-os/app/build/reports/tests/
+          if-no-files-found: ignore
+          retention-days: 14
