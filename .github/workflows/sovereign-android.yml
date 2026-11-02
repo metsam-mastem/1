@@ -6,6 +6,11 @@ on:
     paths:
       - "components/sovereign-os/**"
       - ".github/workflows/sovereign-android.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "components/sovereign-os/**"
+      - ".github/workflows/sovereign-android.yml"
   workflow_dispatch:
 
 permissions:
@@ -14,7 +19,7 @@ permissions:
 jobs:
   android:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: components/sovereign-os
@@ -30,12 +35,14 @@ jobs:
         uses: android-actions/setup-android@v4
         with:
           packages: 'platform-tools'
-      - name: Install Android 36 SDK
-        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
-      - name: Set up Gradle 8.13
+      - name: Install Android 17 preview SDK
+        run: sdkmanager "platforms;android-37" "build-tools;36.0.0"
+      - name: Set up Gradle 9.4.1
         uses: gradle/actions/setup-gradle@v6
         with:
-          gradle-version: "8.13"
+          gradle-version: "9.4.1"
+      - name: Verify dependency resolution
+        run: gradle --no-daemon dependencies --configuration debugRuntimeClasspath
       - name: Run unit tests
         run: gradle --no-daemon test
       - name: Build debug APK
